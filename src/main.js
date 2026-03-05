@@ -14,7 +14,7 @@ wormImage.src = wormEnemy;
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
-canvas.widthg = 500;
+canvas.width = 500;
 canvas.height = 800;
 
 class Game {
@@ -23,8 +23,8 @@ class Game {
   }
   update() {}
   draw() {}
-  #addNewEnemy(){} 
-  }
+  #addNewEnemy() {}
+}
 
 class Enemy {
   constructor() {}
@@ -35,6 +35,7 @@ class Enemy {
 let last = 0;
 let now = 0;
 let run = 1500;
+
 function animate(timestamp) {
   let delta = timestamp - last;
   last = timestamp;
@@ -43,7 +44,6 @@ function animate(timestamp) {
     //TODO
     now = 0;
   }
-
   requestAnimationFrame(animate);
 }
 
