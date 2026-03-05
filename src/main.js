@@ -1,6 +1,5 @@
 import "./style.css";
 
-import "./style.css";
 import ghostEnemy from "./enemy_ghost.png";
 import spiderEnemy from "./enemy_spider.png";
 import wormEnemy from "./enemy_worm.png";
@@ -24,7 +23,8 @@ class Game {
   }
   update() {}
   draw() {}
-}
+  #addNewEnemy(){} 
+  }
 
 class Enemy {
   constructor() {}
@@ -40,7 +40,7 @@ function animate(timestamp) {
   last = timestamp;
   now += delta;
   if (now > run) {
-    console.log("run");
+    //TODO
     now = 0;
   }
 
