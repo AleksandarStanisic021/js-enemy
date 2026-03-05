@@ -24,3 +24,16 @@ class Game {
   draw() {}
   #addNewEnemy() {}
 }
+class Enemy {
+  constructor() {}
+  update() {}
+  draw() {}
+}
+
+let last = 0;
+function animate(timestamp) {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  requestAnimationFrame(animate);
+}
+animate();
