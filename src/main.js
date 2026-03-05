@@ -1,4 +1,6 @@
 import "./style.css";
+
+import "./style.css";
 import ghostEnemy from "./enemy_ghost.png";
 import spiderEnemy from "./enemy_spider.png";
 import wormEnemy from "./enemy_worm.png";
@@ -17,13 +19,13 @@ canvas.widthg = 500;
 canvas.height = 800;
 
 class Game {
-  construcctor() {
+  constructor() {
     this.enemies = [];
   }
   update() {}
   draw() {}
-  #addNewEnemy() {}
 }
+
 class Enemy {
   constructor() {}
   update() {}
@@ -31,9 +33,18 @@ class Enemy {
 }
 
 let last = 0;
+let now = 0;
+let run = 1500;
 function animate(timestamp) {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  let delta = timestamp - last;
+  last = timestamp;
+  now += delta;
+  if (now > run) {
+    console.log("run");
+    now = 0;
+  }
 
   requestAnimationFrame(animate);
 }
-animate();
+
+animate(0);
