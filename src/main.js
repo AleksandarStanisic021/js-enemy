@@ -10,4 +10,17 @@ spiderImage.src = spiderEnemy;
 let wormImage = new Image();
 wormImage.src = wormEnemy;
 
-console.log("yaya");
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+
+canvas.widthg = 500;
+canvas.height = 800;
+
+class Game {
+  construcctor() {
+    this.enemies = [];
+  }
+  update() {}
+  draw() {}
+  #addNewEnemy() {}
+}
