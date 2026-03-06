@@ -21,15 +21,15 @@ class Game {
   constructor() {
     this.enemies = [];
   }
-  update() {}
-  draw() {}
-  #addNewEnemy() {}
+  update() { }
+  draw() { }
+  #addNewEnemy() { }
 }
 
 class Enemy {
-  constructor() {}
-  update() {}
-  draw() {}
+  constructor() { }
+  update() { }
+  draw() { }
 }
 
 let last = 0;
@@ -41,7 +41,7 @@ function animate(timestamp) {
   last = timestamp;
   now += delta;
   if (now > run) {
-    //TODO
+    //TODO nesto
     now = 0;
   }
   requestAnimationFrame(animate);
