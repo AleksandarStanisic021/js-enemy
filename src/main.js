@@ -20,30 +20,50 @@ canvas.height = 800;
 class Game {
   constructor() {
     this.enemies = [];
+    this.#addNewEnemy();
+    console.log(this.enemies);
   }
-  update() { }
-  draw() { }
-  #addNewEnemy() { }
+  update() {
+    this.enemies.forEach(enemy => enemy.update());
+  }
+  draw() {
+    this.enemies.forEach(enemy => enemy.draw());
+  }
+
+  #addNewEnemy() {
+    this.enemies.push(new Enemy());
+  }
 }
 
 class Enemy {
-  constructor() { }
-  update() { }
-  draw() { }
+  constructor() {
+    this.x = 100;
+    this.y = 100;
+    this.width = 50;
+    this.height = 50;
+  }
+
+  update() {
+    this.x--;
+    if (this.x < 0) {
+      this.x = canvas.width;
+    }
+  }
+  draw() {
+    ctx.fillStyle = "red";
+    ctx.fillRect(this.x, this.y, this.width, this.height);
+  }
 }
 
-let last = 0;
-let now = 0;
-let run = 1500;
+const game = new Game();
+let lastTime = 0;
 
 function animate(timestamp) {
-  let delta = timestamp - last;
-  last = timestamp;
-  now += delta;
-  if (now > run) {
-    //TODO nesto
-    now = 0;
-  }
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  game.update();
+  game.draw();
+
+
   requestAnimationFrame(animate);
 }
 
