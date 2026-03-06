@@ -38,39 +38,64 @@ class Game {
     }
     this.enemies.forEach(enemy => enemy.update());
   }
-  draw() {
-    this.enemies.forEach(enemy => enemy.draw());
+  draw(deltaTime) {
+    this.enemies.forEach(enemy => enemy.draw(deltaTime));
+
   }
 
   #addNewEnemy() {
-    this.enemies.push(new Enemy(this));
-    console.log(this.enemies);
+    this.enemies.push(new Worm(this));
+    this.enemies.sort((a, b) => { b - a })
   }
 }
 
 class Enemy {
   constructor(game) {
     this.game = game;
-    this.x = this.game.width;
-    this.y = Math.random() * this.game.height;
-    this.width = 50;
-    this.height = 50;
     this.markedForDeletion = false;
   }
 
   update() {
     this.x--;
-    if (this.x < -this.width) {
+    if (this.x < 0 - this.width) {
       this.markedForDeletion = true;
     }
   }
-
 
   draw() {
     this.game.ctx.fillStyle = "red";
     this.game.ctx.fillRect(this.x, this.y, this.width, this.height);
   }
 }
+
+class Worm extends Enemy {
+  constructor(game) {
+    super(game);
+    this.image = wormImage;
+    this.x = this.game.width;
+    this.y = Math.random() * this.game.height;
+    this.spriteWidth = 229;
+    this.spriteHeight = 171;
+    this.width = 229 / 2;
+    this.height = 171 / 2;
+    this.counter = 1;
+  }
+
+  draw(deltaTime) {
+    this.game.ctx.drawImage(
+      this.image,
+      this.counter * this.spriteWidth,
+      0,
+      this.spriteWidth,
+      this.spriteHeight,
+      this.x,
+      this.y,
+      this.width,
+      this.height
+    );
+  }
+}
+
 
 const game = new Game(ctx, canvas.width, canvas.height);
 let lastTime = 0;
@@ -82,7 +107,7 @@ function animate(timestamp) {
   lastTime = timestamp;
   ctx.clearRect(0, 0, game.width, game.height);
   game.update(deltaTime);
-  game.draw();
+  game.draw(deltaTime);
   requestAnimationFrame(animate);
 }
 
