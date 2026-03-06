@@ -18,12 +18,24 @@ canvas.width = 500;
 canvas.height = 800;
 
 class Game {
-  constructor() {
+  constructor(ctx, width, height) {
+    this.ctx = ctx;
+    this.width = width;
+    this.height = height;
     this.enemies = [];
+    this.enemyInterval = 1400;
+    this.enemyTimer = 0;
     this.#addNewEnemy();
-    console.log(this.enemies);
   }
-  update() {
+  update(deltaTime) {
+    this.enemies = this.enemies.filter((enemy) => !enemy.markedForDeletion);
+    if (this.enemyTimer > this.enemyInterval) {
+      this.#addNewEnemy();
+      this.enemyTimer = 0;
+    }
+    else {
+      this.enemyTimer += deltaTime;
+    }
     this.enemies.forEach(enemy => enemy.update());
   }
   draw() {
@@ -31,39 +43,46 @@ class Game {
   }
 
   #addNewEnemy() {
-    this.enemies.push(new Enemy());
+    this.enemies.push(new Enemy(this));
+    console.log(this.enemies);
   }
 }
 
 class Enemy {
-  constructor() {
-    this.x = 100;
-    this.y = 100;
+  constructor(game) {
+    this.game = game;
+    this.x = this.game.width;
+    this.y = Math.random() * this.game.height;
     this.width = 50;
     this.height = 50;
+    this.markedForDeletion = false;
   }
 
   update() {
     this.x--;
-    if (this.x < 0) {
-      this.x = canvas.width;
+    if (this.x < -this.width) {
+      this.markedForDeletion = true;
     }
   }
+
+
   draw() {
-    ctx.fillStyle = "red";
-    ctx.fillRect(this.x, this.y, this.width, this.height);
+    this.game.ctx.fillStyle = "red";
+    this.game.ctx.fillRect(this.x, this.y, this.width, this.height);
   }
 }
 
-const game = new Game();
+const game = new Game(ctx, canvas.width, canvas.height);
 let lastTime = 0;
+let deltaTime = 0;
+
 
 function animate(timestamp) {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  game.update();
+  deltaTime = timestamp - lastTime;
+  lastTime = timestamp;
+  ctx.clearRect(0, 0, game.width, game.height);
+  game.update(deltaTime);
   game.draw();
-
-
   requestAnimationFrame(animate);
 }
 
